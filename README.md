@@ -62,8 +62,18 @@ You'll need to fix several intentional issues in both the tests and the applicat
 
 **Issue**: Some form fields in the frontend don't have proper labels or the labels don't match what the tests expect.
 
+### Challenge 3: Fix the Backend
+
+**Issue**: The backend in `server.mjs` has multiple bugs!.
+
 **Your Task**:
-- Review HTML templates and fix the accessibility issues
+- Review the POST `/membership/renewal` route handler
+- Identify and fix any issues with request handling and data processing
+
+## Resources
+
+- [Cypress Cucumber Preprocessor Docs](https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/docs/readme.md)
+- [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
 
 ## License
 
