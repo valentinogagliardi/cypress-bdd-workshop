@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Membership Renewal</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+			line-height: 1.6;
+			background-color: #f5f5f5;
+			padding: 2rem;
+		}
+
+		.container {
+			max-width: 600px;
+			margin: 0 auto;
+			background: white;
+			padding: 2rem;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		h1 {
+			color: #333;
+			margin-bottom: 1.5rem;
+		}
+
+		.form-group {
+			margin-bottom: 1.5rem;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 0.5rem;
+			color: #555;
+			font-weight: 500;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 0.75rem;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			font-size: 1rem;
+		}
+
+		input:focus, select:focus {
+			outline: none;
+			border-color: #007bff;
+		}
+
+		button {
+			width: 100%;
+			padding: 0.75rem;
+			background-color: #007bff;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			font-size: 1rem;
+			font-weight: 500;
+			cursor: pointer;
+			transition: background-color 0.2s;
+		}
+
+		button:hover {
+			background-color: #0056b3;
+		}
+
+		.error {
+			color: #dc3545;
+			margin-bottom: 1rem;
+			padding: 0.75rem;
+			background-color: #f8d7da;
+			border: 1px solid #f5c6cb;
+			border-radius: 4px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Membership Renewal</h1>
+
+		<form method="POST" action="/memberhip/renewal">
+			<div class="form-group">
+				<label for="renewalPeriod">Renewal Period</label>
+				<select id="renewalPeriod" name="renewalPeriod" required>
+					<option value="">Select renewal period</option>
+					<option value="1">1 year</option>
+					<option value="2">2 years</option>
+					<option value="3">3 years</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="cardNumber">Card Number</label>
+				<input
+					type="text"
+					id="cardNumber"
+					name="cardNumber"
+					placeholder="1234 5678 9012 3456"
+					required
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="expiry">Expiration Date</label>
+				<input
+					type="text"
+					id="expiry"
+					name="expiry"
+					placeholder="MM/YY"
+					required
+				/>
+			</div>
+
+			<div class="form-group">
+				<input
+					type="text"
+					id="cvc"
+					name="cvc"
+					placeholder="123"
+					required
+				/>
+			</div>
+
+			<div class="form-group">
+				<input
+					type="text"
+					id="cardholderName"
+					name="cardholderName"
+					placeholder="John Doe"
+					required
+				/>
+			</div>
+
+			<button type="button">Renew Membership</button>
+		</form>
+	</div>
+</body>
+</html>
