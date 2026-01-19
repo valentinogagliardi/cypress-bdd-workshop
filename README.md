@@ -49,6 +49,13 @@ This workshop uses the **Given-When-Then** pattern with Cucumber/Gherkin syntax:
 
 You'll need to fix several intentional issues in both the tests and the application. Work through these challenges in order:
 
+### Challenge 0: Complete the scenarios
+
+**Issue**: The feature files in `cypress/e2e` are missing some scenarios.
+
+**Your Task**:
+- Complete the missing scenarios in the feature files to cover all the functionalities of the application.
+
 ### Challenge 1: Implement Testing Library Queries
 
 **Issue**: The step definitions in `cypress/e2e/Template.mjs` are missing the actual assertions.
@@ -64,7 +71,7 @@ You'll need to fix several intentional issues in both the tests and the applicat
 
 ### Challenge 3: Fix the Backend
 
-**Issue**: The backend in `server.mjs` has multiple bugs!.
+**Issue**: The backend in `server.mjs` has multiple issues.
 
 **Your Task**:
 - Review the POST `/membership/renewal` route handler
