@@ -4,6 +4,8 @@ Feature: Online membership renewal
     Background:
         Given Jon Doe is a registered member
 
+Rule: any registered user can renew its membership
+
     Scenario: Successfully renew membership with valid payment
         When I navigate to the membership renewal page
         And I select a "1 year" renewal period
