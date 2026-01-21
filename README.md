@@ -77,10 +77,18 @@ You'll need to fix several intentional issues in both the tests and the applicat
 - Review the POST `/membership/renewal` route handler
 - Identify and fix any issues with request handling and data processing
 
+## Running Unit Tests
+
+```bash
+npm test
+```
+
 ## Resources
 
 - [Cypress Cucumber Preprocessor Docs](https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/docs/readme.md)
 - [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)
+- [Cucumber/Gherkin Syntax](https://cucumber.io/docs/gherkin/)
+- [Vitest Documentation](https://vitest.dev)
 
 ## License
 
