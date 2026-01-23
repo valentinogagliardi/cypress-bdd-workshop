@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Products</title>
+	<title>Catalogo Prodotti</title>
 	<style>
 		* {
 			box-sizing: border-box;
@@ -15,82 +15,255 @@
 			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 			line-height: 1.6;
 			background-color: #f5f5f5;
-			padding: 2rem;
 		}
 
 		.container {
-			max-width: 800px;
+			max-width: 1200px;
 			margin: 0 auto;
 			background: white;
-			padding: 2rem;
-			border-radius: 8px;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			min-height: 100vh;
 		}
 
-		h1 {
-			color: #333;
-			margin-bottom: 1.5rem;
-		}
-
-		.products-list {
-			list-style: none;
-		}
-
-		.product-item {
+		.header {
+			background-color: #ffd700;
+			padding: 1rem 2rem;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding: 1rem;
-			margin-bottom: 0.75rem;
-			background-color: #f8f9fa;
-			border-radius: 4px;
-			border: 1px solid #dee2e6;
 		}
 
-		.product-name {
-			font-weight: 500;
+		.header h1 {
+			color: #333;
+			font-size: 1.25rem;
+			margin: 0;
+		}
+
+		.close-btn {
+			background: none;
+			border: none;
+			font-size: 1.5rem;
+			cursor: pointer;
 			color: #333;
 		}
 
-		.status-badge {
-			padding: 0.375rem 0.75rem;
-			border-radius: 4px;
-			font-size: 0.875rem;
-			font-weight: 500;
+		.search-section {
+			padding: 1.5rem 2rem;
+			border-bottom: 1px solid #e0e0e0;
 		}
 
-		.status-available {
+		.search-section h2 {
+			font-size: 0.875rem;
+			color: #666;
+			margin-bottom: 1rem;
+			text-transform: uppercase;
+		}
+
+		.search-input {
+			width: 100%;
+			padding: 0.75rem;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			font-size: 0.875rem;
+		}
+
+		.filters {
+			padding: 1rem 2rem;
+			border-bottom: 1px solid #e0e0e0;
+			display: flex;
+			gap: 0.5rem;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.filter-left {
+			display: flex;
+			gap: 0.5rem;
+			flex-wrap: wrap;
+		}
+
+		.filter-right {
+			display: flex;
+			gap: 0.5rem;
+		}
+
+		.filter-btn {
+			padding: 0.5rem 1rem;
+			border: none;
+			background-color: #e0e0e0;
+			border-radius: 20px;
+			cursor: pointer;
+			font-size: 0.75rem;
+			font-weight: 500;
+			text-transform: uppercase;
+		}
+
+		.filter-btn.active {
+			background-color: #333;
+			color: white;
+		}
+
+		.products-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+			gap: 1.5rem;
+			padding: 2rem;
+			list-style: none;
+		}
+
+		.product-card {
+			background: white;
+			border: 1px solid #e0e0e0;
+			border-radius: 8px;
+			padding: 1rem;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			transition: box-shadow 0.2s;
+		}
+
+		.product-card:hover {
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		}
+
+		.product-image-container {
+			position: relative;
+			text-align: center;
+			margin-bottom: 1rem;
+		}
+
+		.brand-logo {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			background: white;
+			border: 1px solid #e0e0e0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 0.5rem;
+		}
+
+		.product-image {
+			width: 100%;
+			height: 150px;
+			object-fit: contain;
+			margin-bottom: 0.5rem;
+		}
+
+		.status-badge {
+			display: inline-block;
+			padding: 0.25rem 0.75rem;
+			border-radius: 4px;
+			font-size: 0.75rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			margin-bottom: 0.5rem;
+		}
+
+		.status-badge.status-available {
 			background-color: rgb(34, 197, 94);
 			color: white;
 		}
 
-		.status-running-low {
+		.status-badge.status-running-low {
 			background-color: rgb(234, 179, 8);
 			color: white;
 		}
 
-		.status-out-of-stock {
+		.status-badge.status-out-of-stock {
 			background-color: rgb(239, 68, 68);
 			color: white;
 		}
 
+		.product-name {
+			font-size: 0.875rem;
+			color: #333;
+			margin-bottom: 0.75rem;
+			line-height: 1.4;
+			min-height: 2.8rem;
+		}
+
+		.product-colors {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+			margin-top: auto;
+		}
+
+		.color-dot {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			border: 1px solid #ddd;
+		}
+
+		.color-label {
+			font-size: 0.75rem;
+			color: #666;
+			margin-left: 0.25rem;
+		}
+
 		.empty-message {
 			text-align: center;
-			padding: 3rem;
+			padding: 4rem 2rem;
 			color: #666;
+		}
+
+		@media (max-width: 768px) {
+			.products-grid {
+				grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+				gap: 1rem;
+				padding: 1rem;
+			}
+
+			.filters {
+				flex-direction: column;
+				align-items: stretch;
+			}
+
+			.filter-left, .filter-right {
+				justify-content: flex-start;
+			}
 		}
 	</style>
 </head>
 <body>
 	<div class="container">
-		<h1>Products</h1>
+		<div class="header">
+			<h1>Catalogo Prodotti</h1>
+			<button class="close-btn" aria-label="Chiudi">×</button>
+		</div>
 
-		<ul class="products-list" id="productsList">
+		<div class="search-section">
+			<h2>Catalogo Generale</h2>
+			<input
+				type="search"
+				class="search-input"
+				placeholder="Es: iPhone 13..."
+				aria-label="Cerca prodotti"
+			/>
+		</div>
+
+		<div class="filters">
+			<div class="filter-left">
+				<button class="filter-btn">Filtra per</button>
+				<button class="filter-btn">Apple</button>
+				<button class="filter-btn">Samsung</button>
+			</div>
+			<div class="filter-right">
+				<button class="filter-btn">Tipologia</button>
+				<button class="filter-btn active">Vendita</button>
+				<button class="filter-btn">Noleggio</button>
+			</div>
+		</div>
+
+		<ul class="products-grid" id="productsList" role="list">
 			<!-- Products will be loaded here -->
 		</ul>
 
 		<div class="empty-message" id="emptyMessage" style="display: none;">
-			<p>No products available</p>
+			<p>Nessun prodotto disponibile</p>
 		</div>
 	</div>
 
@@ -106,15 +279,29 @@
 				return;
 			}
 
-			productsList.style.display = 'block';
+			productsList.style.display = 'grid';
 			emptyMessage.style.display = 'none';
 
 			productsList.innerHTML = products.map(product => {
 				const status = getAvailabilityStatus(product.stock);
+				const brandInitial = product.name.charAt(0);
+
 				return `
-					<li class="product-item">
-						<span class="product-name">${product.name}</span>
+					<li class="product-card">
+						<div class="product-image-container">
+							<div class="brand-logo">
+								<span style="font-weight: bold; font-size: 1.25rem;">${brandInitial}</span>
+							</div>
+							<div style="background: #f5f5f5; padding: 1rem; border-radius: 4px;">
+								<div style="width: 80px; height: 80px; margin: 0 auto; background: #ddd; border-radius: 4px;"></div>
+							</div>
+						</div>
 						<span class="status-badge ${status.className}">${status.text}</span>
+						<div class="product-name">${product.name}</div>
+						<div class="product-colors">
+							<div class="color-dot" style="background-color: #333;"></div>
+							<span class="color-label">Black</span>
+						</div>
 					</li>
 				`;
 			}).join('');

@@ -65,7 +65,62 @@ Given("there are no products available", () => {
 });
 
 Then("I should see an empty products list message", () => {
-	cy.findByText(/no products available/i).should("be.visible");
+	cy.findByText(/nessun prodotto disponibile/i).should("be.visible");
+});
+
+// Steps for adding out-of-stock products to offer
+When("I add {string} to offer", (productName) => {
+	cy.findByText(productName)
+		.parent()
+		.within(() => {
+			cy.findByRole("button", { name: /aggiungi|add/i }).click();
+		});
+});
+
+Then("the system should confirm {string}", (message) => {
+	cy.findByText(new RegExp(message, "i")).should("be.visible");
+});
+
+// Steps for KAM user scenario
+Given("I am a KAM user named {string}", (userName) => {
+	cy.wrap(userName).as("kamUser");
+
+	// Mock authentication for KAM user
+	cy.intercept("GET", "/api/user", {
+		statusCode: 200,
+		body: { name: userName, role: "KAM" },
+	}).as("getUser");
+});
+
+When("I access the product catalog", () => {
+	cy.visit("/products");
+	cy.findByRole("list", { timeout: 10000 }).should("exist");
+});
+
+When("I select {string} marked as {string}", (productName, status) => {
+	cy.findByText(productName)
+		.parent()
+		.within(() => {
+			cy.findByText(new RegExp(status, "i")).should("exist");
+		});
+
+	cy.wrap(productName).as("selectedProduct");
+});
+
+When("I add the product to offer", () => {
+	cy.get("@selectedProduct").then((productName) => {
+		cy.findByText(productName)
+			.parent()
+			.within(() => {
+				cy.findByRole("button", { name: /aggiungi|add/i }).click();
+			});
+	});
+});
+
+Then("the product should be added to the offer", () => {
+	cy.findByText(/prodotto aggiunto|aggiunto/i, {
+		timeout: 5000,
+	}).should("be.visible");
 });
 
 // Helper function to convert color names to CSS values
