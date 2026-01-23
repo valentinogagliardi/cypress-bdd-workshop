@@ -1,9 +1,13 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import fastifyFormbody from "@fastify/formbody";
+import fastifyStatic from "@fastify/static";
 import fastifyView from "@fastify/view";
 import ejs from "ejs";
 import Fastify from "fastify";
+import productsData from "./cypress/fixtures/products.json" with {
+	type: "json",
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,6 +17,10 @@ const fastify = Fastify({
 });
 
 await fastify.register(fastifyFormbody);
+await fastify.register(fastifyStatic, {
+	root: join(__dirname, "public"),
+	prefix: "/public/",
+});
 await fastify.register(fastifyView, {
 	engine: {
 		ejs: ejs,
@@ -20,22 +28,17 @@ await fastify.register(fastifyView, {
 	root: join(__dirname, "views"),
 });
 
-fastify.get("/membership/renewal", async (_, reply) => {
-	return reply.view("renewal.ejs");
+// Load products from fixtures
+let products = productsData;
+
+// Render products page
+fastify.get("/products", async (_, reply) => {
+	return reply.view("products.ejs");
 });
 
-fastify.post("/membership/renewal", async (request, reply) => {
-	const { renewalPeriod, cardNumber, cardholderName } = request.body;
-
-	if (!renewalPeriod || !cardNumber || !expiry || !cvc || !cardholderName) {
-		return reply.status(400).view("renewal.ejs", {
-			error: "All fields are required",
-		});
-	}
-
-	return reply.view("success.ejs", {
-		email: "jon.doe@example.com",
-	});
+// API endpoint to get products
+fastify.get("/api/products", async (_, reply) => {
+	return reply.send(products);
 });
 
 try {
